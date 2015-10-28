@@ -15,6 +15,7 @@ We can see that 28 is the first triangle number to have over five divisors.
 
 What is the value of the first triangle number to have over five hundred divisors?
 
+76576500
 */
 
 package scala
@@ -23,21 +24,26 @@ object PE12 extends App {
 
   println(solveProblem(1,0))
   
+  //println(countMultiples(76576500))
+  
+  // changed to tail recursive to avoid stackoverflow
   def solveProblem(n: Int, sum: Int) : Int = {
     //val m = triangularNumber(n)
       val m = sum + n
     if (countMultiples(m) > 500) {
-      println(countMultiples(m))
       m
     }
-    else solveProblem(n + 1, m)
+    else {
+      //println(m)
+      solveProblem(n + 1, m)
+    }
   }
   
     // this should be named countFactors
   def countMultiples(n: Int) : Int = {
     var counter = 0
     var i = 0
-    for (i <- 1 to n) {
+    for (i <- 1 to n) { // Range should be 1 to  sqrt(n) and counter+=2 and +=1 if final number
       if((n % i == 0)) counter += 1
     }
     counter
